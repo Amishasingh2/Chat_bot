@@ -1,4 +1,4 @@
-# chatbot
+# Generic Chatbot
 A simple chat bot in JavaScript with links to smart conversational APIs such as [WebKnox](https://webknox.com/api) (all purpose question answering), [spoonacular](https://spoonacular.com/food-api) (food related conversations), and [DuckDuckGo Instant Answers](https://duckduckgo.com/api) (mostly entities like movies, people, and places).
 
 ## Demo
@@ -56,7 +56,7 @@ You can now also manually define some patterns that the bot should be able to re
 ChatBot.addPattern(
     "(?:my name is|I'm|I am) (.*)",
     "response",
-    "Hi $1, thanks for talking to me today", 
+    "Hi $1, thanks for talking to me today",
     function(matches){
         ChatBot.setHumanName(matches[1]);
     },
@@ -66,9 +66,9 @@ ChatBot.addPattern(
 ChatBot.addPattern("^hi$","response","Howdy my friend", undefined, "Say 'Hi' to be greeted.");
 
 ChatBot.addPattern(
-    "compute ([0-9]+) plus ([0-9]+)", 
-    "response", 
-    undefined, 
+    "compute ([0-9]+) plus ([0-9]+)",
+    "response",
+    undefined,
     function (matches) {
         ChatBot.addChatEntry("That would be "+(1*matches[1]+1*matches[2])+".","bot");
     },
@@ -87,26 +87,26 @@ var sampleConversation = [
 // play the conversation, second parameter is the pause between the inputs in milliseconds
 ChatBot.playConversation(sampleConversation,4000)
 ```
-    
+
 You can also write your own answer engines, just implement the `react`, `getCapabilities`,  and `getSuggestUrl` methods. Here's a template:
 ```javascript
 var myengine = function() {
-    
+
     var capabilities = [
         "If you say 'hip hip', the bot says hooray"
     ]
 
     return {
         react: function (query) {
-            
+
             var content = '';
             if (query == 'hip hip') {
                 content = 'hooray';
             }
-            
+
             ChatBot.addChatEntry(content, "bot");
             ChatBot.thinking(false);
-  
+
         },
         getCapabilities: function() {
             return capabilities;
@@ -117,5 +117,3 @@ var myengine = function() {
     }
 }();
 ```
-    
-   
